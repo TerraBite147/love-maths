@@ -14,6 +14,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  document.getElementById("answer-box").addEventListener("keydown",function(event) {
+    if (event.key === "Enter"){
+        checkAnswer();
+    }
+  })
+
   runGame("addition");
 });
 /**
@@ -21,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
  * and after the user's answer has been processed
  */
 function runGame(gameType) {
+  document.getElementById("answer-box").value = "";
+  document.getElementById("answer-box").focus();
+
   // Creates two random numbers between 1 and 25
   let num1 = Math.floor(Math.random() * 25) + 1;
   let num2 = Math.floor(Math.random() * 25) + 1;
@@ -76,11 +86,9 @@ function calculateCorrectAnswer() {
     return [operand1 - operand2, "subtract"];
   } else if (operator === "/") {
     return [operand1 / operand2, "division"];
-  } else if (operator === "*") {
+  } else if (operator === "x") {
     return [operand1 * operand2, "multiply"];
-  }
-
-  else {
+  } else {
     alert(`Unknown Operator: ${operator}`);
     throw `Unknown Operator: ${operator}. Aborting`;
   }
@@ -108,8 +116,10 @@ function displayAdditionQuestion(operand1, operand2) {
 }
 
 function displaySubtractionQuestion(operand1, operand2) {
-  document.getElementById("operand1").textContent = operand1;
-  document.getElementById("operand2").textContent = operand2;
+  document.getElementById("operand1").textContent =
+    operand1 > operand2 ? operand1 : operand2;
+  document.getElementById("operand2").textContent =
+    operand1 < operand2 ? operand1 : operand2;
   document.getElementById("operator").textContent = "-";
 }
 
@@ -124,5 +134,3 @@ function displayDivisionQuestion(operand1, operand2) {
   document.getElementById("operand2").textContent = operand2;
   document.getElementById("operator").textContent = "/";
 }
-
-
